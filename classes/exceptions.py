@@ -1,22 +1,30 @@
 class BaseError(Exception):
-    message = 'Что-то пошло не так'
+    message = 'Неожиданная ошибка'
 
 
-class NoCapacityError(BaseError):
-    message = 'Не хватает места'
+class RequestError(BaseError):
+    message = 'Произошло ошибка обработки запроса'
 
 
-class NoItemsError(BaseError):
-    message = 'Не хватает такого товара'
+class CourierError(BaseError):
+    message = 'Произошла ошибка при доставке'
 
 
-class ExcessProductsError(BaseError):
-    message = 'Слишком большое количество товара'
+class NotEnoughSpace(CourierError):
+    message = 'Недостаточно места на складе'
 
 
-class BadRequestError(BaseError):
-    message = 'Запрос составлен неверно'
+class NotEnoughProduct(CourierError):
+    message = 'Недостаточно товара на складе'
 
 
-class WrongStorageError(BaseError):
-    message = 'Неправильное место доставки'
+class TooManyDifferentProducts(CourierError):
+    message = 'Слишком много разных товаров'
+
+
+class InvalidRequest(RequestError):
+    message = 'Неправильный запрос. Попробуйте снова'
+
+
+class InvalidStorageName(RequestError):
+    message = 'Выбран несуществующий склад'

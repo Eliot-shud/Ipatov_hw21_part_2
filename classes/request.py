@@ -1,15 +1,15 @@
 from typing import Dict, List
 
 from classes.abs_storage import AbstractStorage
-from classes.exceptions import BadRequestError, WrongStorageError
+from classes.exceptions import InvalidRequest, InvalidStorageName
 
 
 class Request:
     def __init__(self, request: str, storage: Dict[str, AbstractStorage]):
 
-        split_request: List[str] = request.strip().lower().split(' ')
+        split_request: List[str] = request.lower().split(' ')
         if len(split_request) != 7:
-            raise BadRequestError
+            raise InvalidRequest
 
         self.amount = int(split_request[1])
         self.goods = split_request[2]
@@ -17,4 +17,4 @@ class Request:
         self.destination = split_request[6]
 
         if self.departure not in storage or self.destination not in storage:
-            raise WrongStorageError
+            raise InvalidStorageName

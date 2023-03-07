@@ -2,10 +2,10 @@ from typing import Dict
 
 from classes.abs_storage import AbstractStorage
 from classes.courier import Courier
-from classes.exceptions import BaseError
 from classes.request import Request
 from classes.shop import Shop
 from classes.store import Store
+from classes.exceptions import RequestError, CourierError
 
 store = Store(
     items={'мылов': 10,
@@ -36,21 +36,21 @@ def main():
             print(f'В {name} хранится: \n{storage.get_items()}')
 
         request = input('Введите запрос в формате "Доставить 3 рыбов из склад в магазин"\n'
-                        'Введите "стоп" чтобы закончить\n')
+                        'Введите "стоп" чтобы закончить:\n')
 
         if request == 'стоп':
             break
 
         try:
             request = Request(request=request, storage=storages)
-        except BaseError as e:
+        except RequestError as e:
             print(e.message)
 
         courier = Courier(request=request, storages=storages)
 
         try:
             courier.transport()
-        except BaseError as e:
+        except CourierError as e:
             print(e.message)
 
 
